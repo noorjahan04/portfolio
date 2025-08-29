@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import resumePDF from '../assets/Noor_Jahan_Resume.pdf'; // <-- Import your local PDF
 
 const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleResumeClick = () => {
+    
+    window.open(resumePDF, "_blank");
+    const link = document.createElement("a");
+    link.href = resumePDF;
+    link.download = "Noor_Jahan_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -30,6 +42,7 @@ const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
           <button onClick={() => { scrollToSection('skills'); setMenuOpen(false); }}>SKILLS</button>
           <button onClick={() => { scrollToSection('projects'); setMenuOpen(false); }}>PROJECTS</button>
           <button onClick={() => { scrollToSection('contact'); setMenuOpen(false); }}>CONTACT</button>
+
           <button className="theme-toggle" onClick={toggleDarkMode}>
             <img
               src={
@@ -42,16 +55,17 @@ const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
               height="20"
             />
           </button>
-          <a
-            href="https://drive.google.com/uc?export=download&id=1AzsqdXuUc5UsaZlQDffaj6fM-9jOBCdX"
-            target="_blank"
-            rel="noopener noreferrer"
-            download="Noor_Jahan_Resume.pdf"
+
+          {/* Resume Button */}
+          <button
             className="resume-btn"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              handleResumeClick();
+              setMenuOpen(false);
+            }}
           >
             RESUME
-          </a>
+          </button>
         </nav>
       </div>
     </header>

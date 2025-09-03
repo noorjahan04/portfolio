@@ -1,21 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import resumePDF from '/Noor_Jahan_Resume.pdf';
 
 const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef(null);
+  const hamburgerRef = useRef(null);
 
   const handleToggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen(prev => !prev);
   };
+
+  // Close when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
 
   // Add/remove "menu-open" class on body
   useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add("menu-open");
-    } else {
-      document.body.classList.remove("menu-open");
-    }
+    document.body.classList.toggle("menu-open", menuOpen);
   }, [menuOpen]);
 
   const handleResumeClick = () => {
@@ -38,13 +60,13 @@ const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
         </div>
 
         {/* Hamburger Icon */}
-        <button className="hamburger" onClick={handleToggleMenu}>
+        <button ref={hamburgerRef} className="hamburger" onClick={handleToggleMenu}>
           <span className={menuOpen ? 'bar open' : 'bar'}></span>
           <span className={menuOpen ? 'bar open' : 'bar'}></span>
           <span className={menuOpen ? 'bar open' : 'bar'}></span>
         </button>
 
-        <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
+        <nav ref={navRef} className={`nav ${menuOpen ? 'nav-open' : ''}`}>
           <button onClick={() => { scrollToSection('home'); setMenuOpen(false); }}>HOME</button>
           <button onClick={() => { scrollToSection('about'); setMenuOpen(false); }}>ABOUT</button>
           <button onClick={() => { scrollToSection('skills'); setMenuOpen(false); }}>SKILLS</button>

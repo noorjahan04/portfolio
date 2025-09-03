@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import resumePDF from '/Noor_Jahan_Resume.pdf';
 
@@ -7,12 +7,16 @@ const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
 
   const handleToggleMenu = () => {
     setMenuOpen(!menuOpen);
-    if (!menuOpen) {
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
-    }
   };
+
+  // Add/remove "menu-open" class on body
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
+  }, [menuOpen]);
 
   const handleResumeClick = () => {
     window.open(resumePDF, "_blank");

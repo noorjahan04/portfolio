@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import resumePDF from '../assets/Noor_Jahan_Resume.pdf'; // <-- Import your local PDF
+import resumePDF from '../assets/Noor_Jahan_Resume.pdf';
 
 const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,8 +9,16 @@ const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
     setMenuOpen(!menuOpen);
   };
 
+  // Add/remove "menu-open" class on body
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
+  }, [menuOpen]);
+
   const handleResumeClick = () => {
-    
     window.open(resumePDF, "_blank");
     const link = document.createElement("a");
     link.href = resumePDF;

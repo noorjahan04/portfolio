@@ -802,3 +802,20 @@ body.dark-mode {
     justify-content: space-between;
   }
 }
+
+/* Prevent scroll when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Blur all content except header & nav */
+body.menu-open .hero,
+body.menu-open .about,
+body.menu-open .skills,
+body.menu-open .projects,
+body.menu-open .contact,
+body.menu-open .footer {
+  filter: blur(6px);
+  transition: filter 0.3s ease-in-out;
+  pointer-events: none; /* prevent accidental clicks */
+}

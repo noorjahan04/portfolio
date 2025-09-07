@@ -55,7 +55,7 @@ const Header = ({ darkMode, toggleDarkMode, scrollToSection }) => {
       <div className="container">
         <div className="logo">
           <Link to="/">
-            <h2>Noor<br />Jahan</h2>
+            <h2>Noor Jahan</h2>
           </Link>
         </div>
 

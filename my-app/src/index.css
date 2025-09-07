@@ -681,6 +681,10 @@ body.dark-mode {
     text-align: center;
   }
 
+  .about h2{
+    font-size: 1.5rem
+  }
+
   .skills-grid,
   .tools-grid {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -819,3 +823,5 @@ body.menu-open .footer {
   transition: filter 0.3s ease-in-out;
   pointer-events: none; /* prevent accidental clicks */
 }
+
+
